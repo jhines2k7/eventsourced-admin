@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  eventsourced-admin:
+    image: jhines2017/eventsourced-admin
+    container_name: eventsourced-admin
+    ports:
+      - "80:80"
+
+  eventsourced-api:
+    image: jhines2017/eventsourced-api
+    container_name: eventsourced-api
+    ports:
+      - "8080:8080"
