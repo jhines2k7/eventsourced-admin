@@ -3,24 +3,19 @@ import './views/home.view'
 import Storage from './storage'
 import {Router} from 'director/build/director'
 import riot from 'riot'
-import reduce from './reducer'
 import EventStore from './eventStore'
 import config from './config'
 
 let home = function() {
     "use strict";
 
-    let appState = reduce(EventStore.events);
-
     document.body.appendChild(document.createElement('home'));
-    riot.mount('home');
-
-    appState.greeting = 'Hello World!';
+    riot.mount('home', { EventStore: EventStore });
 
     EventStore.add(EventStore.events, [{
         channel: 'async',
-        topic: 'admin',
-        data: appState
+        topic: 'admin.update.greeting',
+        data: 'Hello World!'
     }]);
 };
 
