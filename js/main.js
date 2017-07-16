@@ -1,4 +1,5 @@
 import './views/home.view'
+import './components/top.nav'
 
 import Storage from './storage'
 import {Router} from 'director/build/director'
@@ -11,6 +12,9 @@ let home = function() {
 
     document.body.appendChild(document.createElement('home'));
     riot.mount('home', { EventStore: EventStore });
+
+    document.body.appendChild(document.createElement('top-nav'));
+    riot.mount('top-nav');
 
     EventStore.add(EventStore.events, [{
         channel: 'async',
