@@ -1,5 +1,6 @@
 import './views/home.view'
 import './components/top.nav'
+import './components/side.nav'
 
 import Storage from './storage'
 import {Router} from 'director/build/director'
@@ -24,7 +25,12 @@ let home = function() {
 };
 
 let router = Router({
-    '/': home
+    '/': home/*,
+    '/calendar': calendar,
+    '/media': media,
+    '/chat': chat,
+    '/login': login,
+    'invoice': invoice*/
 });
 
 Storage.get().then( (events) => {
