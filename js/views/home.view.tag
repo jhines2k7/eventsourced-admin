@@ -1,7 +1,7 @@
 <home class="wrapper">
     <aside data-is="side-nav" class="side-nav"></aside>
     <div class="main">
-        <div data-is="breadcrumbs" class=breadcrumb></div>
+        <div data-is="breadcrumbs" eventstore={ opts.EventStore } class=breadcrumb></div>
         <div class="top-banner">
             <div class="top-banner-title">Dashboard</div>
             <div class="top-banner-subtitle">Welcome back, John Doe, <i class="fa fa-map-marker"></i> New York City</div>

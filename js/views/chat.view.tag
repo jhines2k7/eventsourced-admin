@@ -1,7 +1,7 @@
 <chat class="wrapper">
     <aside data-is="side-nav" class="side-nav"></aside>
     <div class="main">
-        <div data-is="breadcrumbs" class=breadcrumb></div>
+        <div data-is="breadcrumbs" eventstore={ opts.EventStore } class=breadcrumb></div>
         <div class="content chat-wrapper">
             <div class="panel">
                 <div class="chat-contact">

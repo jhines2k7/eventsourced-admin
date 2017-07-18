@@ -29,6 +29,14 @@ let home = function() {
         channel: 'routing',
         topic: 'admin.update.currentView',
         data: 'home'
+    },{
+        channel: 'async',
+        topic: 'admin.update.breadcrumbs',
+        data: {
+            currentView: 'Home',
+            subCategory: '',
+            url: ''            
+        }
     }]);
 };
 
@@ -47,6 +55,14 @@ let calendar = function() {
         channel: 'routing',
         topic: 'admin.update.currentView',
         data: 'calendar'
+    },{
+        channel: 'async',
+        topic: 'admin.update.breadcrumbs',
+        data: {
+            currentView: 'Calendar',
+            subCategory: 'Scheduling',
+            url: '#/calendar'            
+        }
     }]);
 }
 
@@ -65,6 +81,14 @@ let chat = function() {
         channel: 'routing',
         topic: 'admin.update.currentView',
         data: 'chat'
+    },{
+        channel: 'async',
+        topic: 'admin.update.breadcrumbs',
+        data: {
+            currentView: 'Chat',
+            subCategory: 'Communication',
+            url: '#/chat'            
+        }
     }]);
 }
 
@@ -83,6 +107,14 @@ let media = function() {
         channel: 'routing',
         topic: 'admin.update.currentView',
         data: 'media'
+    },{
+        channel: 'async',
+        topic: 'admin.update.breadcrumbs',
+        data: {
+            currentView: 'Images',
+            subCategory: 'Media',
+            url: '#/media'            
+        }
     }]);
 }
 
@@ -101,6 +133,14 @@ let invoice = function() {
         channel: 'routing',
         topic: 'admin.update.currentView',
         data: 'invoice'
+    },{
+        channel: 'async',
+        topic: 'admin.update.breadcrumbs',
+        data: {
+            currentView: 'Invoice',
+            subCategory: 'Billing',
+            url: '#/invoice'            
+        }
     }]);
 }
 

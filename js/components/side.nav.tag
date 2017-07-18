@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="user-side-profile">
+    <div class={ user-side-profile: true, active: viewModel.profileLinksActive } onclick={ toggleProfileLinks }>
         <div class="user-image">
             <div class="user-on"></div>
             <img alt="pongo" src="assets/images/profile.png">
@@ -156,5 +156,17 @@
             <div class="title">Pongo <div class="version">v1.1</div></div>
             <div class="subtitle">Simple & Clean Admin Template</div>
         </div>
-    </div>    
+    </div>
+
+    <script>
+        this.viewModel = {
+            profileLinksActive: false
+        }
+
+        toggleProfileLinks(e) {
+            this.viewModel.profileLinksActive = !this.viewModel.profileLinksActive;
+
+            this.update(this.viewModel);
+        }
+    </script>    
 </side-nav>

@@ -1,7 +1,40 @@
 <breadcrumbs>
-    <a href="">Home</a> 
-    <span class="breadcrumb-devider">/</span> 
-    <a href="">Products</a> 
-    <span class="breadcrumb-devider">/</span> 
-    <a href="">Iphone 6</a>
+    <a href="#/">Home</a> 
+    <span if={ viewModel.subCategory !== '' } class="breadcrumb-devider">/</span> 
+    <a if={ viewModel.subCategory !== '' } href="{ viewModel.url }">{ viewModel.subCategory }</a> 
+    <span if={ viewModel.subCategory !== '' } class="breadcrumb-devider">/</span> 
+    <a if={ viewModel.subCategory !== '' } href="{ viewModel.url }">{ viewModel.currentView }</a>
+
+    <script>
+        import postal from 'postal/lib/postal.lodash'
+        import reduce from '../reducer'
+
+        this.viewModel = {
+            subCategory: '',
+            currentView: '',
+            url: ''
+        };
+
+        let EventStore = opts.eventstore;
+
+        subscribe(channel, topic) {
+            let subscription = postal.subscribe({
+                channel: channel,
+                topic: topic,
+                callback: function(data, envelope) {                    
+                    let state = reduce(EventStore.events);
+                    
+                    this.viewModel.currentView = state.breadcrumbs.currentView;
+                    this.viewModel.subCategory = state.breadcrumbs.subCategory;
+                    this.viewModel.url = state.breadcrumbs.url;
+
+                    this.update(this.viewModel);
+                }.bind(this)
+            });
+
+            return subscription;
+        };
+
+        this.subscribe('async', 'admin.update.breadcrumbs');
+    </script>
 </breadcrumbs>

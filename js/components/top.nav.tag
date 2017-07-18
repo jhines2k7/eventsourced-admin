@@ -12,7 +12,7 @@
             </div>
             <div class="top-nav-content">
                 <div class="top-nav-box">
-                    <div class="quick-link">
+                    <div class={ quick-link: true,  active: viewModel.quickLinksActive } onclick={ toggleQuickLinks }>
                         <div class="link-icon"><i class="fa fa-bars"></i></div>
                         <ul class="animated bounceInUp">
                             <li><a href=""><i class="fa fa-bars"></i> Mailbox</a></li>
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="user-top-profile">
+                    <div class={ user-top-profile: true, active: viewModel.profileLinksActive } onclick={ toggleProfileLinks }>
                         <div class="user-image">
                             <div class="user-on"></div>
                             <img alt="pongo" src="assets/images/profile.png">
@@ -151,4 +151,23 @@
             <div class="profile-nav-mobile"><i class="fa fa-cog"></i></div>
         </div>
     </div>
+
+    <script>
+        this.viewModel = {
+            quickLinksActive: false,
+            profileLinksActive: false
+        }
+
+        toggleQuickLinks(e) {
+            this.viewModel.quickLinksActive = !this.viewModel.quickLinksActive;
+
+            this.update(this.viewModel);
+        }
+
+        toggleProfileLinks(e) {
+            this.viewModel.profileLinksActive = !this.viewModel.profileLinksActive;
+
+            this.update(this.viewModel);
+        } 
+    </script>
 </top-nav>
