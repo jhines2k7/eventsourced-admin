@@ -1,5 +1,4 @@
 import './views/home.view'
-import './views/calendar.view'
 import './views/chat.view'
 import './views/media.view'
 import './views/invoice.view'
@@ -40,32 +39,6 @@ let home = function() {
         }
     }]);
 };
-
-let calendar = function() {
-    'use strict';
-
-    if(document.getElementsByTagName('top-nav').length === 0) {
-        document.body.appendChild(document.createElement('top-nav'));
-        riot.mount('top-nav', { EventStore: EventStore });
-    }
-
-    document.body.appendChild(document.createElement('calendar'));
-    riot.mount('calendar', { EventStore: EventStore });    
-
-    EventStore.add(EventStore.events, [{
-        channel: 'routing',
-        topic: 'admin.update.currentView',
-        data: 'calendar'
-    },{
-        channel: 'async',
-        topic: 'admin.update.breadcrumbs',
-        data: {
-            currentView: 'Calendar',
-            subCategory: 'Scheduling',
-            url: '#/calendar'            
-        }
-    }]);
-}
 
 let chat = function() {
     'use strict';
@@ -186,9 +159,7 @@ let allRoutes = function() {
     if(!state.user.isLoggedIn) {
         Router().init().setRoute('/login');
     } else {
-        if(state.currentView === 'calendar') {
-            document.querySelector("a[href='#/calendar']").parentElement.className = 'active';    
-        } else if(state.currentView === 'media') {
+        if(state.currentView === 'media') {
             document.querySelector("a[href='#/media']").parentElement.className = 'active';
         } else if(state.currentView === 'chat') {
             document.querySelector("a[href='#/chat']").parentElement.className = 'active';
@@ -202,7 +173,6 @@ let allRoutes = function() {
 
 let router = Router({
     '/': home,
-    '/calendar': calendar,
     '/chat': chat,
     '/media': media,
     '/invoice': invoice,    

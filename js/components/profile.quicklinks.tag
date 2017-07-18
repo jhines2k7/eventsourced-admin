@@ -26,15 +26,17 @@
             role: ''
         }
 
-        this.on('mount', () => {            
-            let state = reduce(EventStore.events);
+        this.on('mount', () => {
+            if(EventStore) {
+                let state = reduce(EventStore.events);
         
-            this.viewModel = {
-                name: state.user.name,
-                role: state.user.role
-            }
+                this.viewModel = {
+                    name: state.user.name,
+                    role: state.user.role
+                }
 
-            this.update(this.viewModel);            
+                this.update(this.viewModel);
+            }                                
         })
 
         updateUser(eventStore) {            

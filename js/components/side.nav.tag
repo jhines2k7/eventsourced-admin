@@ -113,13 +113,7 @@
                     <i class="fa fa-bars"></i> 
                     <span>Dashboard</span>
                 </a>
-            </li>
-            <li>
-                <a href="#/calendar">
-                    <i class="fa fa-calendar"></i> 
-                    <span>Calendar</span>
-                </a>
-            </li>
+            </li>           
             <li>
                 <a href="#/chat">
                     <i class="fa fa-comments-o"></i> 

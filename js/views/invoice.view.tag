@@ -1,5 +1,5 @@
 <invoice class="wrapper">
-    <aside data-is="side-nav" class="side-nav"></aside>
+    <aside data-is="side-nav" eventstore={ opts.EventStore } class="side-nav"></aside>
     
     <div class="main">
         <div data-is="breadcrumbs" eventstore={ opts.EventStore } class=breadcrumb></div>
