@@ -1,6 +1,8 @@
 import './views/home.view'
 import './views/calendar.view'
 import './views/chat.view'
+import './views/media.view'
+import './views/invoice.view'
 import './components/top.nav'
 import './components/side.nav'
 import './components/breadcrumbs'
@@ -66,6 +68,42 @@ let chat = function() {
     }]);
 }
 
+let media = function() {
+    "use strict";
+
+    if(document.getElementsByTagName('top-nav').length === 0) {
+        document.body.appendChild(document.createElement('top-nav'));
+        riot.mount('top-nav');
+    }
+
+    document.body.appendChild(document.createElement('media'));
+    riot.mount('media', { EventStore: EventStore });    
+
+    EventStore.add(EventStore.events, [{
+        channel: 'routing',
+        topic: 'admin.update.currentView',
+        data: 'media'
+    }]);
+}
+
+let invoice = function() {
+    "use strict";
+
+    if(document.getElementsByTagName('top-nav').length === 0) {
+        document.body.appendChild(document.createElement('top-nav'));
+        riot.mount('top-nav');
+    }
+
+    document.body.appendChild(document.createElement('invoice'));
+    riot.mount('invoice', { EventStore: EventStore });    
+
+    EventStore.add(EventStore.events, [{
+        channel: 'routing',
+        topic: 'admin.update.currentView',
+        data: 'invoice'
+    }]);
+}
+
 let allRoutes = function() {
     document.querySelectorAll('.main-menu ul li').forEach( (li) => {
         li.className = '';
@@ -91,10 +129,10 @@ let allRoutes = function() {
 let router = Router({
     '/': home,
     '/calendar': calendar,
-    '/chat': chat/*,
-    '/media': media,    
-    '/login': login,
-    'invoice': invoice*/
+    '/chat': chat,
+    '/media': media,
+    '/invoice': invoice/*,    
+    '/login': login*/,
 });
 
 router.configure({
