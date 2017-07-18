@@ -130,22 +130,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class={ user-top-profile: true, active: viewModel.profileLinksActive } onclick={ toggleProfileLinks }>
-                        <div class="user-image">
-                            <div class="user-on"></div>
-                            <img alt="pongo" src="assets/images/profile.png">
-                        </div>
-                        <div class="clear">
-                            <div class="user-name">John Doe</div>
-                            <div class="user-group">Administrator</div>
-                            <ul class="user-top-menu animated bounceInUp">
-                                <li><a href="">Profile <div class="badge badge-yellow pull-right">2</div></a></li>
-                                <li><a href="">Settings</a></li>
-                                <li><a href="">Change Password</a></li>
-                                <li><a href="">Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div data-is="profile-quicklinks" 
+                        eventstore={ opts.EventStore } 
+                        class={ user-top-profile: true, active: viewModel.profileLinksActive } 
+                        onclick={ toggleProfileLinks }></div>
                 </div>
             </div>
             <div class="profile-nav-mobile"><i class="fa fa-cog"></i></div>
@@ -153,10 +141,10 @@
     </div>
 
     <script>
-        this.viewModel = {
-            quickLinksActive: false,
-            profileLinksActive: false
-        }
+        import postal from 'postal/lib/postal.lodash'
+        import reduce from '../reducer'
+
+        this.viewModel = {}
 
         toggleQuickLinks(e) {
             this.viewModel.quickLinksActive = !this.viewModel.quickLinksActive;
@@ -168,6 +156,27 @@
             this.viewModel.profileLinksActive = !this.viewModel.profileLinksActive;
 
             this.update(this.viewModel);
-        } 
+        }        
+
+        let EventStore = opts.EventStore;
+
+        subscribe(channel, topic) {
+            let subscription = postal.subscribe({
+                channel: channel,
+                topic: topic,
+                callback: function(data, envelope) {                    
+                    let state = reduce(EventStore.events);
+
+                    if(state.currentView === 'login') {
+                        this.unmount();
+                    }
+
+                }.bind(this)
+            });
+
+            return subscription;
+        };
+
+        this.subscribe('routing', 'admin.update.currentView');
     </script>
 </top-nav>

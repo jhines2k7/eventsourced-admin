@@ -12,6 +12,14 @@ export default function reduce(events) {
             state.breadcrumbs.url = event.data.url;
         }
 
+        if(event.topic === 'admin.update.user') {
+            state.user = event.data;            
+        }
+
+        if(event.topic === 'admin.signout.success') {
+            state.user.isLoggedIn = false;
+        }
+
         return state;
     }, {
         currentView: 'home',
@@ -19,6 +27,11 @@ export default function reduce(events) {
             currentView: 'Home',
             subCategory: '',
             url: ''
+        },
+        user: {
+            name: '',
+            role: '',
+            isLoggedIn: false
         }
-    });
+    })
 }

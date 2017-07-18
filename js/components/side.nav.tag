@@ -100,22 +100,11 @@
             </div>
         </div>
     </div>
-    <div class={ user-side-profile: true, active: viewModel.profileLinksActive } onclick={ toggleProfileLinks }>
-        <div class="user-image">
-            <div class="user-on"></div>
-            <img alt="pongo" src="assets/images/profile.png">
-        </div>
-        <div class="clear">
-            <div class="user-name">John Doe</div>
-            <div class="user-group">Administrator</div>
-            <ul class="user-side-menu animated bounceInUp">
-                <li><a href="">Profile <div class="badge badge-yellow pull-right">2</div></a></li>
-                <li><a href="">Settings</a></li>
-                <li><a href="">Change Password</a></li>
-                <li><a href="">Logout</a></li>
-            </ul>
-        </div>
-    </div>
+    <div data-is="profile-quicklinks"
+            refs="quick_links"
+            eventstore={ opts.EventStore } 
+            class={ user-side-profile: true, active: viewModel.profileLinksActive } 
+            onclick={ toggleProfileLinks }></div>
     <div class="main-menu-title">Menu</div>
     <div class="main-menu">
         <ul>
@@ -168,5 +157,9 @@
 
             this.update(this.viewModel);
         }
+
+        this.on('mount', function() {            
+            this.tags['profile-quicklinks'].updateUser(opts.eventstore)
+        })
     </script>    
 </side-nav>
