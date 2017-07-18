@@ -1,13 +1,7 @@
 <home class="wrapper">
     <aside data-is="side-nav" class="side-nav"></aside>
     <div class="main">
-        <div class="breadcrumb">
-            <a href="">Home</a> 
-            <span class="breadcrumb-devider">/</span> 
-            <a href="">Products</a> 
-            <span class="breadcrumb-devider">/</span> 
-            <a href="">Iphone 6</a>
-        </div>
+        <div data-is="breadcrumbs" class=breadcrumb></div>
         <div class="top-banner">
             <div class="top-banner-title">Dashboard</div>
             <div class="top-banner-subtitle">Welcome back, John Doe, <i class="fa fa-map-marker"></i> New York City</div>
@@ -283,9 +277,7 @@
         import postal from 'postal/lib/postal.lodash'
         import reduce from '../reducer'
 
-        this.viewModel = {
-            greeting: ''
-        };
+        this.viewModel = {};
 
         let EventStore = opts.EventStore;
 
@@ -296,9 +288,9 @@
                 callback: function(data, envelope) {                    
                     let state = reduce(EventStore.events);
 
-                    this.viewModel.greeting = state.greeting;
-
-                    this.update(this.viewModel);
+                    if(state.currentView !== 'home') {
+                        this.unmount();
+                    }
 
                 }.bind(this)
             });
@@ -306,6 +298,6 @@
             return subscription;
         };
 
-        this.subscribe('async', 'admin.update.greeting');
+        this.subscribe('routing', 'admin.update.currentView');
     </script>
 </home> 
