@@ -30,6 +30,7 @@
     <script>
         import postal from 'postal/lib/postal.lodash'
         import reduce from '../reducer'
+        import config from '../config'
         import {Router} from 'director/build/director'
 
         let EventStore = opts.EventStore;
@@ -57,18 +58,35 @@
             let email = this.refs.email.value;
             let password = this.refs.password.value;
 
-            EventStore.add(EventStore.events, [{
-                channel: 'async',
-                topic: 'admin.update.user',
-                data: {
-                    name: 'Lupita Nyong\'o',
-                    isLoggedIn: true,
-                    role: 'Administrator',
-                    location: 'Columbus, OH'
+            fetch(`http://${config.domain}:8282/users/${email}/`).then( (response) => {
+                if(response.ok) {
+                    return response.json();
                 }
-            }]);
 
-            Router().init().setRoute('/');
+                throw new Error('There was an error while making the request.');
+            }).then( (user) => {
+                EventStore.add(EventStore.events, [{
+                    channel: 'async',
+                    topic: 'admin.update.user',
+                    data: {
+                        name: user.name,
+                        isLoggedIn: true,
+                        role: user.role,
+                        location: user.location,
+                        imageUrl: user.imageUrl,
+                        email: user.email
+                    }
+                }]);
+
+                Router().init().setRoute('/');
+            }).catch( (error) => {
+                console.log(`ERROR: ${error.message}`);
+
+                EventStore.add(EventStore.events, [{
+                    channel: 'async',
+                    topic: 'admin.async.request.failure'
+                }]);
+            });            
         }
 
         this.subscribe('routing', 'admin.update.currentView');

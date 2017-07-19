@@ -57,7 +57,7 @@ let home = function() {
             channel: 'async',
             topic: 'admin.async.request.failure'
         }]);
-    });    
+    });
 };
 
 let chat = function() {

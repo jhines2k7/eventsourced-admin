@@ -40,7 +40,9 @@ export default function reduce(events) {
             name: '',
             role: '',
             isLoggedIn: false,
-            location: ''
+            location: '',
+            imageUrl: '',
+            email: ''
         },
         bounceRate: 0,
         location: 0,

@@ -1,7 +1,7 @@
 <profile-quicklinks>
     <div class="user-image">
         <div class="user-on"></div>
-        <img alt="pongo" src="assets/images/profile-black-woman.jpg">
+        <img alt="pongo" src="assets/images/{ viewModel.imageUrl }">
     </div>
     <div class="clear">
         <div class="user-name">{ viewModel.name }</div>
@@ -14,7 +14,6 @@
         </ul>
     </div>
         
-
     <script>
         import postal from 'postal/lib/postal.lodash'
         import reduce from '../reducer'
@@ -32,7 +31,8 @@
         
                 this.viewModel = {
                     name: state.user.name,
-                    role: state.user.role
+                    role: state.user.role,
+                    imageUrl: state.user.imageUrl
                 }
 
                 this.update(this.viewModel);
@@ -44,7 +44,8 @@
         
             this.viewModel = {
                 name: state.user.name,
-                role: state.user.role
+                role: state.user.role,
+                imageUrl: state.user.imageUrl
             }
 
             this.update(this.viewModel);
