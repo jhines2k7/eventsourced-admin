@@ -6,6 +6,7 @@ import './views/login.view'
 import './components/top.nav'
 import './components/side.nav'
 import './components/profile.quicklinks'
+import './components/breadcrumbs'
 
 import Storage from './storage'
 import {Router} from 'director/build/director'
