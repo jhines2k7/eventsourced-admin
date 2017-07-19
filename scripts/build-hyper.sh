@@ -19,7 +19,10 @@ cp js/*.js .tmp
 node_modules/.bin/riot js .tmp && node_modules/.bin/webpack --config=webpack.config.js
 
 # modify the value of the domain object in the config file
-sed -i "s/domain: 'localhost'/domain: '192.168.99.100'/g" dist/bundle.js
+sed -i "s/domain: 'localhost'/domain: '209.177.85.118'/g" dist/bundle.js
+
+#copy the assets to dist directory
+cp -r assets dist
 
 # copy index.html to dist directory
 cp index.html dist

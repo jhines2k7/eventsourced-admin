@@ -7,8 +7,8 @@ services:
     ports:
       - "80:80"
 
-  eventsourced-api:
-    image: jhines2017/eventsourced-api
-    container_name: eventsourced-api
+  eventsourced-admin-api:
+    image: jhines2017/eventsourced-admin-api
+    container_name: eventsourced-admin-api
     ports:
       - "8080:8080"

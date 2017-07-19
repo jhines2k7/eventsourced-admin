@@ -5,7 +5,7 @@
             <div class="logo-wrapper">
                 <div class="logo-box">
                     <img alt="pongo" src="assets/images/logo.png">
-                    <a href="">
+                    <a href="#/">
                         <div class="logo-title">Pongo</div>
                     </a>
                 </div>
