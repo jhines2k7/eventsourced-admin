@@ -61,9 +61,10 @@
                 channel: 'async',
                 topic: 'admin.update.user',
                 data: {
-                    name: 'John Doe',
+                    name: 'Lupita Nyong\'o',
                     isLoggedIn: true,
-                    role: 'Administrator'
+                    role: 'Administrator',
+                    location: 'Columbus, OH'
                 }
             }]);
 

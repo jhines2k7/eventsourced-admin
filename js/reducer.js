@@ -13,7 +13,15 @@ export default function reduce(events) {
         }
 
         if(event.topic === 'admin.update.user') {
-            state.user = event.data;            
+            state.user = event.data;                        
+        }
+
+        if(event.topic === 'admin.update.home') {
+            state.bounceRate = event.data.bounceRate;
+            state.location = event.data.location;
+            state.comments = event.data.comments;
+            state.visitors = event.data.visitors;
+            state.productsSold = event.data.productsSold;           
         }
 
         if(event.topic === 'admin.signout.success') {
@@ -31,7 +39,13 @@ export default function reduce(events) {
         user: {
             name: '',
             role: '',
-            isLoggedIn: false
-        }
+            isLoggedIn: false,
+            location: ''
+        },
+        bounceRate: 0,
+        location: 0,
+        comments: 0,
+        visitors: 0,
+        productsSold: 0
     })
 }

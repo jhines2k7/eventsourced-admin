@@ -17,27 +17,46 @@ import reduce from './reducer'
 let home = function() {
     'use strict';
     
-    if(document.getElementsByTagName('top-nav').length === 0) {
-        document.body.appendChild(document.createElement('top-nav'));
-        riot.mount('top-nav', { EventStore: EventStore });
-    }
-
-    document.body.appendChild(document.createElement('home'));
-    riot.mount('home', { EventStore: EventStore });
-    
-    EventStore.add(EventStore.events, [{
-        channel: 'routing',
-        topic: 'admin.update.currentView',
-        data: 'home'
-    },{
-        channel: 'async',
-        topic: 'admin.update.breadcrumbs',
-        data: {
-            currentView: 'Home',
-            subCategory: '',
-            url: ''            
+    fetch(`http://${config.domain}:8282/home`).then( (response) => {
+        if(response.ok) {
+            return response.json();
         }
-    }]);
+
+        throw new Error('There was an error while making the request.');
+    }).then( (data) => {
+        if(document.getElementsByTagName('top-nav').length === 0) {
+            document.body.appendChild(document.createElement('top-nav'));
+            riot.mount('top-nav', { EventStore: EventStore });
+        }
+
+        document.body.appendChild(document.createElement('home'));
+        riot.mount('home', { EventStore: EventStore });
+        
+        EventStore.add(EventStore.events, [{
+            channel: 'routing',
+            topic: 'admin.update.currentView',
+            data: 'home'
+        },{
+            channel: 'async',
+            topic: 'admin.update.breadcrumbs',
+            data: {
+                currentView: 'Home',
+                subCategory: '',
+                url: ''            
+            }
+        }, {
+            channel: 'async',
+            topic: 'admin.update.home',
+            data: data
+        }]);
+    }).catch( (error) => {
+        console.log(`ERROR: ${error.message}`);
+
+        EventStore.add(EventStore.events, [{
+            channel: 'async',
+            topic: 'admin.async.request.failure'
+        }]);
+    });    
 };
 
 let chat = function() {
@@ -160,13 +179,13 @@ let allRoutes = function() {
         Router().init().setRoute('/login');
     } else {
         if(state.currentView === 'media') {
-            document.querySelector("a[href='#/media']").parentElement.className = 'active';
+            document.querySelector(".main-menu ul li a[href='#/media']").parentElement.className = 'active';
         } else if(state.currentView === 'chat') {
-            document.querySelector("a[href='#/chat']").parentElement.className = 'active';
+            document.querySelector(".main-menu ul li a[href='#/chat']").parentElement.className = 'active';
         } else if(state.currentView === 'invoice') {
-            document.querySelector("a[href='#/invoice']").parentElement.className = 'active';
+            document.querySelector(".main-menu ul li a[href='#/invoice']").parentElement.className = 'active';
         } else {
-            document.querySelector("a[href='#/']").parentElement.className = 'active';
+            document.querySelector(".main-menu ul li a[href='#/']").parentElement.className = 'active';
         }
     }    
 }

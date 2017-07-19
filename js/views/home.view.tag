@@ -4,7 +4,7 @@
         <div data-is="breadcrumbs" eventstore={ opts.EventStore } class=breadcrumb></div>
         <div class="top-banner">
             <div class="top-banner-title">Dashboard</div>
-            <div class="top-banner-subtitle">Welcome back, John Doe, <i class="fa fa-map-marker"></i> New York City</div>
+            <div class="top-banner-subtitle">Welcome back, { viewModel.user.firstName }, <i class="fa fa-map-marker"></i> { viewModel.user.location }</div>
         </div>
         <div class="content no-top-banner">
             <div class="content-header no-mg-top">
@@ -24,9 +24,9 @@
                             <i class="fa fa-newspaper-o"></i>
                             <div class="clear">
                                 <div class="card-title">
-                                    <span class="timer" data-from="0" data-to="1121">1,121</span>
+                                    <span class="timer" data-from="0" data-to="{ viewModel.productsSold }">{ viewModel.productsSold }</span>
                                 </div>
-                                <div class="card-subtitle">PRODUCT SOLD</div>
+                                <div class="card-subtitle">PRODUCTS SOLD</div>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <i class="fa fa-signal"></i>
                             <div class="clear">
                                 <div class="card-title">
-                                    <span class="timer" data-from="0" data-to="72">72</span>%
+                                    <span class="timer" data-from="0" data-to="{ viewModel.bounceRate }">{ viewModel.bounceRate }</span>%
                                 </div>
                                 <div class="card-subtitle">BOUNCE RATE</div>
                             </div>
@@ -46,7 +46,7 @@
                             <i class="fa fa-map-marker"></i>
                             <div class="clear">
                                 <div class="card-title">
-                                    <span class="timer" data-from="0" data-to="24">24</span>m
+                                    <span class="timer" data-from="0" data-to="{ viewModel.bounceRate }">{ viewModel.bounceRate }</span>m
                                 </div>
                                 <div class="card-subtitle">LOCATION</div>
                             </div>
@@ -76,7 +76,7 @@
                         <div class="content-box">
                             <div class="content-box-header">
                                 <div class="header-menu active">Visitors</div>
-                                <div class="header-menu">Comments (134)</div>
+                                <div class="header-menu">Comments ({ viewModel.comments })</div>
                                 <select class="select-rounded pull-right">
                                     <option>Today</option>
                                     <option>7 Days</option>
@@ -87,7 +87,7 @@
                             <div class="line-chart-wrapper">
                                 <div class="line-chart-label">LAST VISITORS</div>
                                 <div class="line-chart-value">
-                                    <span class="timer" data-from="0" data-to="12501">12,501</span>
+                                    <span class="timer" data-from="0" data-to="{ viewModel.visitors }">{ viewModel.visitors }</span>
                                 </div>
                                 <canvas id="line-chart"></canvas>
                             </div>
@@ -161,7 +161,7 @@
                                 <canvas width="120" height="120" id="donut-chart"></canvas>
                                 <div class="donut-chart-label">
                                     <div class="donut-chart-value">330</div>
-                                    <div class="donut-chart-title">Total Visitor</div>
+                                    <div class="donut-chart-title">Total Visitors</div>
                                 </div>
                             </div>
                             <div class="donut-chart-legend">
@@ -277,7 +277,14 @@
         import postal from 'postal/lib/postal.lodash'
         import reduce from '../reducer'
 
-        this.viewModel = {};
+        this.viewModel = {
+            user: {},
+            bounceRate: 0,
+            location: 0,
+            comments: 0,
+            visitors: 0,
+            productsSold: 0
+        };
 
         let EventStore = opts.EventStore;
 
@@ -285,13 +292,34 @@
             let subscription = postal.subscribe({
                 channel: channel,
                 topic: topic,
-                callback: function(data, envelope) {                    
+                callback: function(data, envelope) {
                     let state = reduce(EventStore.events);
-
+                                        
                     if(state.currentView !== 'home') {
                         this.unmount();
-                    }
+                    } else {
 
+                        this.viewModel.user = state.user;
+                        this.viewModel.user.firstName = state.user.name.split(' ')[0];
+
+                        this.viewModel.bounceRate = state.bounceRate;
+                        this.viewModel.location = state.location;
+                        this.viewModel.comments = state.comments;
+                        this.viewModel.visitors = state.visitors;
+                        this.viewModel.productsSold = state.productsSold; 
+
+                        this.update(this.viewModel);
+
+                         // Jquery count to
+                        $('.timer').each(function() {
+                            $(this).countTo({
+                                speed: 2000,
+                                formatter: function (value, options) {
+                                    return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
+                                }
+                            })
+                        })
+                    }
                 }.bind(this)
             });
 
@@ -379,9 +407,10 @@
                     },
                     cutoutPercentage: 80
                 }
-            });
+            });           
         });
             
         this.subscribe('routing', 'admin.update.currentView');
+        this.subscribe('routing', 'admin.update.home');
     </script>
 </home> 

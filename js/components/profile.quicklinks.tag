@@ -1,7 +1,7 @@
 <profile-quicklinks>
     <div class="user-image">
         <div class="user-on"></div>
-        <img alt="pongo" src="assets/images/profile.png">
+        <img alt="pongo" src="assets/images/profile-black-woman.jpg">
     </div>
     <div class="clear">
         <div class="user-name">{ viewModel.name }</div>
