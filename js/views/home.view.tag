@@ -46,7 +46,7 @@
                             <i class="fa fa-map-marker"></i>
                             <div class="clear">
                                 <div class="card-title">
-                                    <span class="timer" data-from="0" data-to="{ viewModel.bounceRate }">{ viewModel.bounceRate }</span>m
+                                    <span class="timer" data-from="0" data-to="{ viewModel.location }">{ viewModel.location }</span>m
                                 </div>
                                 <div class="card-subtitle">LOCATION</div>
                             </div>
@@ -309,22 +309,24 @@
                         this.viewModel.productsSold = state.productsSold; 
 
                         this.update(this.viewModel);
-
-                         // Jquery count to
-                        $('.timer').each(function() {
-                            $(this).countTo({
-                                speed: 2000,
-                                formatter: function (value, options) {
-                                    return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
-                                }
-                            })
-                        })
                     }
                 }.bind(this)
             });
 
             return subscription;
         };
+
+        this.on('updated', () => {
+            // Jquery count to
+            $('.timer').each(function() {
+                $(this).countTo({
+                    speed: 2000,
+                    formatter: function (value, options) {
+                        return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
+                    }
+                })
+            })
+        })
 
         this.on('mount', () => {
             var lineChart = document.getElementById('line-chart');
@@ -407,7 +409,7 @@
                     },
                     cutoutPercentage: 80
                 }
-            });           
+            });                    
         });
             
         this.subscribe('routing', 'admin.update.currentView');

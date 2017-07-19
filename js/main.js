@@ -184,8 +184,6 @@ let allRoutes = function() {
             document.querySelector(".main-menu ul li a[href='#/chat']").parentElement.className = 'active';
         } else if(state.currentView === 'invoice') {
             document.querySelector(".main-menu ul li a[href='#/invoice']").parentElement.className = 'active';
-        } else {
-            document.querySelector(".main-menu ul li a[href='#/']").parentElement.className = 'active';
         }
     }    
 }
